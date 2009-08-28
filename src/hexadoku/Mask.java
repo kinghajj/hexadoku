@@ -5,7 +5,7 @@ package hexadoku;
  *
  * @author Sam Fredrickson <kinghajj@gmail.com>
  */
-public class Mask
+public class Mask implements Board
 {
     private RandomBoard board;
     private Type type;
@@ -42,5 +42,27 @@ public class Mask
         this.board = board;
         this.type = type;
         this.cellVisible = new boolean[RandomBoard.NUM_CELLS];
+    }
+
+    /**
+     * Gets a cell's value by index only if it is visible.
+     *
+     * @param index the index of the cell to use.
+     * @return either the cell's value, or '\0' if the index is invalid or if
+     * the cell is masked.
+     */
+    public char getCellValue(int index)
+    {
+        return cellVisible[index] ? board.getCellValue(index) : '\0';
+    }
+
+    /**
+     * Tests whether the board is valid. A Mask is always valid.
+     *
+     * @return true.
+     */
+    public boolean isValid()
+    {
+        return true;
     }
 }

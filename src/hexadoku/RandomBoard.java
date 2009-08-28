@@ -7,7 +7,7 @@ import java.util.*;
  *
  * @author Sam Fredrickson <kinghajj@gmail.com>
  */
-public class RandomBoard
+public class RandomBoard implements Board
 {
     // The number of cells on the board.
     public static final int NUM_CELLS = 256;

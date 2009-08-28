@@ -5,14 +5,14 @@ package hexadoku;
  *
  * @author Sam Fredrickson <kinghajj@gmail.com>
  */
-public class Mask implements Board
+public class MaskedBoard implements Board
 {
     private RandomBoard board;
     private Type type;
     private boolean[] cellVisible;
 
     /**
-     * This class is thrown if you attempt to create a Mask with an invalid
+     * This class is thrown if you attempt to create a MaskedBoard with an invalid
      * board.
      */
     private class InvalidBoardException extends Exception
@@ -32,9 +32,9 @@ public class Mask implements Board
      *
      * @param board the board to put the mask over.
      * @param type which type of mask to place over the board.
-     * @throws hexadoku.Mask.InvalidBoardException if the board is invalid.
+     * @throws hexadoku.MaskedBoard.InvalidBoardException if the board is invalid.
      */
-    public Mask(RandomBoard board, Type type) throws InvalidBoardException
+    public MaskedBoard(RandomBoard board, Type type) throws InvalidBoardException
     {
         if(!board.isValid())
             throw new InvalidBoardException();
@@ -57,7 +57,7 @@ public class Mask implements Board
     }
 
     /**
-     * Tests whether the board is valid. A Mask is always valid.
+     * Tests whether the board is valid. A MaskedBoard is always valid.
      *
      * @return true.
      */

@@ -10,11 +10,11 @@ import java.util.*;
 public class Board
 {
     // The number of cells on the board.
-    private static final int NUM_CELLS = 256;
+    public static final int NUM_CELLS = 256;
     // The number of possible digits.
-    private static final int NUM_DIGITS = 16;
+    public static final int NUM_DIGITS = 16;
     // The number of rows and columns of square zones.
-    private static final int NUM_SQRS = (int)Math.sqrt(NUM_DIGITS);
+    public static final int NUM_SQRS = (int)Math.sqrt(NUM_DIGITS);
     // The possible digihts.
     private static char[] digits =
             new char[]
@@ -198,6 +198,17 @@ public class Board
         cells = new char[NUM_CELLS];
         rand = new Random();
         populateCell(0);
+    }
+
+    /**
+     * Gets a cell's value by index.
+     *
+     * @param index the index of the cell to use.
+     * @return either the cell's value, or '\0' if the index is invalid.
+     */
+    public char getCellValue(int index)
+    {
+        return index >= 0 && index < cells.length ? cells[index] : '\0';
     }
 
     /**

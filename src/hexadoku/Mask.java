@@ -7,7 +7,7 @@ package hexadoku;
  */
 public class Mask
 {
-    private Board board;
+    private RandomBoard board;
     private Type type;
     private boolean[] cellVisible;
 
@@ -34,13 +34,13 @@ public class Mask
      * @param type which type of mask to place over the board.
      * @throws hexadoku.Mask.InvalidBoardException if the board is invalid.
      */
-    public Mask(Board board, Type type) throws InvalidBoardException
+    public Mask(RandomBoard board, Type type) throws InvalidBoardException
     {
         if(!board.isValid())
             throw new InvalidBoardException();
 
         this.board = board;
         this.type = type;
-        this.cellVisible = new boolean[Board.NUM_CELLS];
+        this.cellVisible = new boolean[RandomBoard.NUM_CELLS];
     }
 }

@@ -7,7 +7,7 @@ import java.util.*;
  *
  * @author Sam Fredrickson <kinghajj@gmail.com>
  */
-public class Board
+public class RandomBoard
 {
     // The number of cells on the board.
     public static final int NUM_CELLS = 256;
@@ -193,7 +193,7 @@ public class Board
     /**
      * Creates a new, random board.
      */
-    public Board()
+    public RandomBoard()
     {
         cells = new char[NUM_CELLS];
         rand = new Random();

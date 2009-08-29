@@ -195,9 +195,52 @@ public class RandomBoard implements Board
      */
     public RandomBoard()
     {
+        Runnable populateCells;
+        Thread populate;
+        boolean finished = false;
+
         cells = new char[NUM_CELLS];
         rand = new Random();
-        populateCell(0);
+        populateCells = new Runnable()
+        {
+            public void run()
+            {
+                populateCell(0);
+            }
+        };
+
+        // Continue trying to populate the board until it's been done.
+        while(!finished)
+        {
+            // Start populating and remember when we started.
+            populate = new Thread(populateCells);
+            long start = System.currentTimeMillis();
+            populate.start();
+
+            // While five seconds have not passed,
+            while(populate.isAlive() && System.currentTimeMillis() - start < 5000)
+                try
+                {
+                    // Wait for the population thread to finish.
+                    Thread.sleep(100);
+                }
+                catch(InterruptedException e)
+                {
+                }
+
+            // If the thread is still running, stop it and try again.
+            if(populate.isAlive())
+            {
+                // Stop thread, inform user, ensure board is blank.
+                populate.stop();
+                System.out.println("Timed out. Retrying to populate board.");
+                for(int i = 0; i < cells.length; ++i)
+                    cells[i] = '\0';
+            }
+            // Otherwise, we're done.
+            else
+                finished = true;
+        }
     }
 
     /**

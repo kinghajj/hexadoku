@@ -7,8 +7,33 @@ package hexadoku;
  */
 public class MaskedBoard implements Board
 {
+    private static boolean[][] masks = new boolean[][]
+    {
+        // TODO: create real masks.
+        {
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,   true ,  true ,  true ,  true ,
+        },
+    };
+
     private RandomBoard board;
-    private Type type;
     private boolean[] cellVisible;
 
     /**
@@ -19,13 +44,6 @@ public class MaskedBoard implements Board
     {
     }
 
-    public enum Type
-    {
-        ONE,
-        TWO,
-        THREE,
-    }
-
     /**
      * Creates a new mask with an arrangement specified by 'type' with the given
      * board.
@@ -34,13 +52,12 @@ public class MaskedBoard implements Board
      * @param type which type of mask to place over the board.
      * @throws hexadoku.MaskedBoard.InvalidBoardException if the board is invalid.
      */
-    public MaskedBoard(RandomBoard board, Type type) throws InvalidBoardException
+    public MaskedBoard(RandomBoard board) throws InvalidBoardException
     {
         if(!board.isValid())
             throw new InvalidBoardException();
 
         this.board = board;
-        this.type = type;
         this.cellVisible = new boolean[RandomBoard.NUM_CELLS];
     }
 

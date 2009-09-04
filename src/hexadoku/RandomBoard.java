@@ -235,7 +235,7 @@ public class RandomBoard implements Board
             // Wait five seconds for the cells to populate.
             try
             {
-                populate.get(5, TimeUnit.SECONDS);
+                populate.get(1, TimeUnit.SECONDS);
                 finished = true;
             }
             catch(Exception e)

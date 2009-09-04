@@ -14,6 +14,13 @@ public class Main
      */
     public static void main(String[] args)
     {
-        System.out.println(new RandomBoard());
+        try
+        {
+            System.out.println(new MaskedBoard(new RandomBoard()));
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
 }

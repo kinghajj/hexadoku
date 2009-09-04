@@ -66,6 +66,11 @@ public class RandomBoard extends Board
         return -1;
     }
 
+    private void clearBoard()
+    {
+        Arrays.fill(cells, '\0');
+    }
+
     /**
      * Populates a cell, and all the following cells, using a backtracking
      * algorithm. Calling with the index 0 causes the entire board to be
@@ -211,9 +216,7 @@ public class RandomBoard extends Board
                 }
                 catch(InterruptedException e)
                 {
-                    // Clear board when interrupted.
-                    for(int i = 0; i < cells.length; ++i)
-                        cells[i] = '\0';
+                    clearBoard();
                 }
             }
         };
@@ -272,8 +275,8 @@ public class RandomBoard extends Board
         int[] count = new int[digits.length];
 
         return verifyByFinder(count, rowCellFinder) &&
-                verifyByFinder(count, colCellFinder) &&
-                verifyByFinder(count, sqrCellFinder);
+               verifyByFinder(count, colCellFinder) &&
+               verifyByFinder(count, sqrCellFinder);
     }
 
     @Override

@@ -104,15 +104,15 @@ public class MaskedBoard extends Board
         final int size = maskSizes[maskIndex];
         final int inc = maskIncs[maskIndex];
         boolean[] M = new boolean[size];
-        int i = rand.nextInt(size);
+        int i = rand.nextInt(size), j;
         numVisible = 0;
         Arrays.fill(M, false);
 
         while(numVisible < desiredNumVisible)
         {
-            if(rand.nextInt() % 7 != 0 && numVisible < desiredNumVisible && !M[i % size])
+            if(rand.nextInt() % 7 == 0 && !M[j = i % size])
             {
-                M[i % size] = true;
+                M[j] = true;
                 numVisible += inc;
             }
             i++;
@@ -121,7 +121,7 @@ public class MaskedBoard extends Board
         numVisible = 0;
 
         for(i = 0; i < Board.NUM_CELLS; ++i)
-            if (cellVisible[i] = M[ind[i] % size])
+            if(cellVisible[i] = M[ind[i] % size])
                 numVisible++;
     }
 

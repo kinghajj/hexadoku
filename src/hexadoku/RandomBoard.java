@@ -1,6 +1,7 @@
 package hexadoku;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * Represents a Hexadoku board.
@@ -79,8 +80,11 @@ public class RandomBoard implements Board
      * @param index the index to begin populating the board at.
      * @return true if populating succeeded.
      */
-    private boolean populateCell(int index)
+    private boolean populateCell(int index) throws InterruptedException
     {
+        if(Thread.interrupted())
+            throw new InterruptedException();
+
         // We're done.
         if(index == NUM_CELLS)
             return true;
@@ -196,50 +200,60 @@ public class RandomBoard implements Board
     public RandomBoard()
     {
         Runnable populateCells;
-        Thread populate;
+        Future<?> populate;
         boolean finished = false;
+        ExecutorService executor;
 
         cells = new char[NUM_CELLS];
         rand = new Random();
+
         populateCells = new Runnable()
         {
             public void run()
             {
-                populateCell(0);
+                try
+                {
+                    populateCell(0);
+                }
+                catch(InterruptedException e)
+                {
+                    // Clear board when interrupted.
+                    for(int i = 0; i < cells.length; ++i)
+                        cells[i] = '\0';
+                }
             }
         };
 
         // Continue trying to populate the board until it's been done.
         while(!finished)
         {
-            // Start populating and remember when we started.
-            populate = new Thread(populateCells);
-            long start = System.currentTimeMillis();
-            populate.start();
+            // Start the thread population thread.
+            System.out.println("Begining populating cells.");
+            executor = Executors.newCachedThreadPool();
+            populate = executor.submit(populateCells);
 
-            // While five seconds have not passed,
-            while(populate.isAlive() && System.currentTimeMillis() - start < 5000)
-                try
-                {
-                    // Wait for the population thread to finish.
-                    Thread.sleep(100);
-                }
-                catch(InterruptedException e)
-                {
-                }
-
-            // If the thread is still running, stop it and try again.
-            if(populate.isAlive())
+            // Wait five seconds for the cells to populate.
+            try
             {
-                // Stop thread, inform user, ensure board is blank.
-                populate.stop();
-                System.out.println("Timed out. Retrying to populate board.");
-                for(int i = 0; i < cells.length; ++i)
-                    cells[i] = '\0';
-            }
-            // Otherwise, we're done.
-            else
+                populate.get(5, TimeUnit.SECONDS);
                 finished = true;
+            }
+            catch(Exception e)
+            {
+                System.out.println("Timed out. Restarting...");
+            }
+
+            // Ensure the thread is shutdown.
+            try
+            {
+                populate.cancel(true);
+                while(!populate.isDone()) {}
+                executor.shutdown();
+                executor.awaitTermination(NUM_SQRS, TimeUnit.DAYS);
+            }
+            catch(InterruptedException e)
+            {
+            }
         }
     }
 

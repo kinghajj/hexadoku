@@ -8,7 +8,7 @@ import java.util.Random;
  *
  * @author Sam Fredrickson <kinghajj@gmail.com>
  */
-public class MaskedBoard implements Board
+public class MaskedBoard extends Board
 {
     private RandomBoard board;
     private Random rand;
@@ -120,7 +120,7 @@ public class MaskedBoard implements Board
 
         numVisible = 0;
 
-        for(i = 0; i < RandomBoard.NUM_CELLS; ++i)
+        for(i = 0; i < Board.NUM_CELLS; ++i)
             if (cellVisible[i] = M[ind[i] % size])
                 numVisible++;
     }
@@ -147,7 +147,7 @@ public class MaskedBoard implements Board
 
         this.board = board;
         this.rand = new Random();
-        this.cellVisible = new boolean[RandomBoard.NUM_CELLS];
+        this.cellVisible = new boolean[Board.NUM_CELLS];
         System.out.println("Masking board.");
         masker(rand.nextInt(maskIndexes.length), 116);
         System.out.println("There are " + numVisible + " cells showing.");
@@ -206,11 +206,11 @@ public class MaskedBoard implements Board
      */
     public String toString()
     {
-        StringBuilder sb = new StringBuilder(RandomBoard.NUM_CELLS * 2);
+        StringBuilder sb = new StringBuilder(Board.NUM_CELLS * 2);
 
         sb.append("---------------------\n");
 
-        for(int i = 0; i < RandomBoard.NUM_CELLS; ++i)
+        for(int i = 0; i < Board.NUM_CELLS; ++i)
         {
             if(i % 64 == 0 && i != 0)
                 sb.append("|\n---------------------\n");

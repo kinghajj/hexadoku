@@ -15,9 +15,9 @@ public class MaskedBoard extends Board
     private boolean[] cellVisible;
     private int numVisible;
 
-    private int[] maskSizes = {64, 127, 128, 128};
-    private int[] maskIncs  = {4, 2, 2, 2};
-    private int[][] maskIndexes =
+    private final static int[] maskSizes = {64, 127, 128, 128};
+    private final static int[] maskIncs  = {4, 2, 2, 2};
+    private final static int[][] maskIndexes =
     {
         {
             0, 1, 2, 3, 4, 5, 6, 7, 7, 6, 5, 4, 3, 2, 1, 0,
@@ -105,6 +105,7 @@ public class MaskedBoard extends Board
         final int inc = maskIncs[maskIndex];
         boolean[] M = new boolean[size];
         int i = rand.nextInt(size), j;
+
         numVisible = 0;
         Arrays.fill(M, false);
 
@@ -149,7 +150,7 @@ public class MaskedBoard extends Board
         this.rand = new Random();
         this.cellVisible = new boolean[Board.NUM_CELLS];
         System.out.println("Masking board.");
-        masker(rand.nextInt(maskIndexes.length), 116);
+        masker(rand.nextInt(maskIndexes.length), 130);
         System.out.println("There are " + numVisible + " cells showing.");
     }
 

@@ -1,5 +1,7 @@
 package hexadoku;
 
+import java.io.PrintStream;
+
 /**
  * The entry point to the application.
  *
@@ -16,7 +18,9 @@ public class Main
     {
         try
         {
-            System.out.println(new MaskedBoard(new RandomBoard()));
+            RandomBoard rboard = new RandomBoard();
+            MaskedBoard mboard = new MaskedBoard(rboard);
+            HtmlGenerator.generate(mboard, new PrintStream("output.html"));
         }
         catch(Exception ex)
         {

@@ -20,7 +20,9 @@ public class Main
         {
             RandomBoard rboard = new RandomBoard();
             MaskedBoard mboard = new MaskedBoard(rboard);
-            HtmlGenerator.generate(mboard, new PrintStream("output.html"));
+            long millis = System.currentTimeMillis();
+            HtmlGenerator.generate(mboard, new PrintStream("G" + millis + ".html"));
+            HtmlGenerator.generate(rboard, new PrintStream("K" + millis + ".html"));
         }
         catch(Exception ex)
         {

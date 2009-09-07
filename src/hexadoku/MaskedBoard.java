@@ -12,7 +12,7 @@ public class MaskedBoard extends Board
 {
     private RandomBoard board;
     private Random rand;
-    private boolean[] cellVisible;
+    private boolean[] cellVisible, originalMask;
     private int numVisible;
 
     private final static int[] maskSizes = {64, 127, 128, 128};
@@ -127,31 +127,33 @@ public class MaskedBoard extends Board
     }
 
     /**
-     * This class is thrown if you attempt to create a MaskedBoard with an invalid
-     * board.
-     */
-    private class InvalidBoardException extends Exception
-    {
-    }
-
-    /**
      * Creates a new mask with an arrangement specified by 'type' with the given
      * board.
      *
      * @param board the board to put the mask over.
      * @throws hexadoku.MaskedBoard.InvalidBoardException if the board is invalid.
      */
-    public MaskedBoard(RandomBoard board) throws InvalidBoardException
+    public MaskedBoard(RandomBoard board)
     {
-        if(!board.isValid())
-            throw new InvalidBoardException();
-
         this.board = board;
         this.rand = new Random();
         this.cellVisible = new boolean[Board.NUM_CELLS];
-        System.out.println("Masking board.");
-        masker(rand.nextInt(maskIndexes.length), 130);
+        this.originalMask = new boolean[Board.NUM_CELLS];
+
+        int desiredNumVisible = 112;
+        int randMaskIndex = rand.nextInt(maskIndexes.length);
+
+        do
+        {
+            desiredNumVisible += 4;
+            System.out.println("Masking board with approx " + desiredNumVisible + " shown cells.");
+            masker(randMaskIndex, desiredNumVisible);
+            for(int i = 0; i < Board.NUM_CELLS; ++i)
+                originalMask[i] = cellVisible[i];
+        } while(!Solver.canEasilySolve(this));
+
         System.out.println("There are " + numVisible + " cells showing.");
+        reset();
     }
 
     /**
@@ -199,6 +201,15 @@ public class MaskedBoard extends Board
         // Otherwise, unmask it.
         cellVisible[index] = true;
         return true;
+    }
+
+    /**
+     * Resets the board's mask to the one originally created.
+     */
+    public void reset()
+    {
+        for(int i = 0; i < cellVisible.length; ++i)
+            cellVisible[i] = originalMask[i];
     }
 
     @Override

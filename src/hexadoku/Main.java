@@ -23,10 +23,13 @@ public class Main
             long millis = System.currentTimeMillis();
             HtmlGenerator.generate(mboard, new PrintStream("G" + millis + ".html"));
             HtmlGenerator.generate(rboard, new PrintStream("K" + millis + ".html"));
+            System.out.println("Finished.");
         }
         catch(Exception ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println("Exception!");
+            System.err.println(ex.getMessage());
+            System.err.println(ex);
         }
     }
 }

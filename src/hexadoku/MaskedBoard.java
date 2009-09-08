@@ -139,18 +139,31 @@ public class MaskedBoard extends Board
         this.rand = new Random();
         this.cellVisible = new boolean[Board.NUM_CELLS];
         this.originalMask = new boolean[Board.NUM_CELLS];
+        boolean run = true;
 
-        int desiredNumVisible = 112;
-        int randMaskIndex = rand.nextInt(maskIndexes.length);
-
-        do
+        // Start with only 116 shown, but go up as needed.
+        for(int desiredNumVisible = 116; run; desiredNumVisible += 4)
         {
-            desiredNumVisible += 4;
-            System.out.println("Masking board with approx " + desiredNumVisible + " shown cells.");
-            masker(randMaskIndex, desiredNumVisible);
-            for(int i = 0; i < Board.NUM_CELLS; ++i)
-                originalMask[i] = cellVisible[i];
-        } while(!Solver.canEasilySolve(this));
+            System.out.print("Attempting to mask board with approx " + desiredNumVisible + " shown cells");
+
+            // Try each mask 100 times.
+            for(int maskIndex = 0; maskIndex < maskIndexes.length && run; ++maskIndex)
+            {
+                for(int i = 0; i < 100 && run; ++i)
+                {
+                    // Run mask.
+                    masker(maskIndex, desiredNumVisible);
+                    // Remember original.
+                    for(int j = 0; j < Board.NUM_CELLS; ++j)
+                        originalMask[j] = cellVisible[j];
+                    // Determine whether we still need to run.
+                    run = !Solver.canEasilySolve(this);
+                }
+                System.out.print('.');
+            }
+
+            System.out.println();
+        }
 
         System.out.println("There are " + numVisible + " cells showing.");
         reset();

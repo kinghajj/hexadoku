@@ -40,7 +40,7 @@ public class HtmlGenerator {
         {
             stream.print("<td");
             if(i == 3 || i == 7 || i == 11)
-                stream.print(" class=\"sr\");");
+                stream.print(" class=\"sr\"");
             stream.print('>');
             cell = board.getCellValue(row * Board.NUM_DIGITS + i);
             stream.print(cell == '\0' ? ' ' : cell);

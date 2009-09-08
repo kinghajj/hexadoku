@@ -25,7 +25,6 @@ public class HtmlGenerator {
         "table#board tbody tr td{border:1px solid black;height:32px;min-width:32px;}",
         "table#board tbody tr.sb{border-bottom:2px solid black;}table#board tbody tr td.sr {border-right:2px solid black;}",
         "</style></head><body>",
-        "<h1>Hexadoku</h1><h2>By Sam Fredrickson</h2><table id=\"board\"><tbody>",
     };
     private static String footer = "</tbody></table></body></html>";
 
@@ -49,10 +48,16 @@ public class HtmlGenerator {
         stream.print("</tr>");
     }
 
-    public static void generate(Board board, PrintStream stream)
+    public static void generate(Board board, PrintStream stream, int numVisible)
     {
+        String ns = "<h1>Hexadoku</h1><h2>By Sam Fredrickson</h2>" +
+                    "<h3>" + numVisible + " Cells Visible</h3>" +
+                    "<table id=\"board\"><tbody>";
+
         for(String line : header)
             stream.print(line);
+
+        stream.print(ns);
 
         for(int row = 0; row < Board.NUM_DIGITS; ++row)
             writeRow(board, stream, row);

@@ -21,8 +21,8 @@ public class Main
             RandomBoard rboard = new RandomBoard();
             MaskedBoard mboard = new MaskedBoard(rboard);
             long millis = System.currentTimeMillis();
-            HtmlGenerator.generate(mboard, new PrintStream("G" + millis + ".html"));
-            HtmlGenerator.generate(rboard, new PrintStream("K" + millis + ".html"));
+            HtmlGenerator.generate(mboard, new PrintStream("G" + millis + ".html"), mboard.getNumVisible());
+            HtmlGenerator.generate(rboard, new PrintStream("K" + millis + ".html"), Board.NUM_CELLS);
             System.out.println("Finished.");
         }
         catch(Exception ex)

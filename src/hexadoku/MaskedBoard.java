@@ -181,6 +181,11 @@ public class MaskedBoard extends Board
         return cellVisible[index] ? board.getCellValue(index) : '\0';
     }
 
+    public int getNumVisible()
+    {
+        return numVisible;
+    }
+
     /**
      * Tests whether the board is valid. A MaskedBoard is always valid.
      *

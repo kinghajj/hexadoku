@@ -74,7 +74,8 @@ public class Solver
                 for(int j = 0; j < seen.length; ++j)
                     if(!seen[j])
                     {
-                        unseenCount++;
+                        if(++unseenCount > 1)
+                            break;
                         unseenIndex = j;
                     }
 

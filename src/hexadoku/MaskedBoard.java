@@ -146,10 +146,10 @@ public class MaskedBoard extends Board
         {
             System.out.print("Attempting to mask board with approx " + desiredNumVisible + " shown cells");
 
-            // Try each mask 100 times.
+            // Try each mask 1000 times.
             for(int maskIndex = 0; maskIndex < maskIndexes.length && run; ++maskIndex)
             {
-                for(int i = 0; i < 100 && run; ++i)
+                for(int i = 0; i < 1000 && run; ++i)
                 {
                     // Run mask.
                     masker(maskIndex, desiredNumVisible);

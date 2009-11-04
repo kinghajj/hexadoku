@@ -13,7 +13,7 @@ public class MaskedBoard extends Board
     private RandomBoard board;
     private Random rand;
     private boolean[] cellVisible, originalMask;
-    private int numVisible;
+    private int numVisible, originalNumVisible;
 
     private final static int[] maskSizes = {64, 127, 128, 128};
     private final static int[] maskIncs  = {4, 2, 2, 2};
@@ -124,6 +124,8 @@ public class MaskedBoard extends Board
         for(i = 0; i < Board.NUM_CELLS; ++i)
             if(cellVisible[i] = M[ind[i] % size])
                 numVisible++;
+
+        originalNumVisible = numVisible;
     }
 
     /**
@@ -165,8 +167,8 @@ public class MaskedBoard extends Board
             System.out.println();
         }
 
-        System.out.println("There are " + numVisible + " cells showing.");
         reset();
+        System.out.println("There are " + numVisible + " cells showing.");
     }
 
     /**
@@ -216,8 +218,9 @@ public class MaskedBoard extends Board
         if(board.getCellValue(index) != guess)
             return false;
 
-        // Otherwise, unmask it.
+        // Otherwise, unmask it and increase visible count.
         cellVisible[index] = true;
+        numVisible++;
         return true;
     }
 
@@ -228,6 +231,7 @@ public class MaskedBoard extends Board
     {
         for(int i = 0; i < cellVisible.length; ++i)
             cellVisible[i] = originalMask[i];
+        numVisible = originalNumVisible;
     }
 
     @Override
